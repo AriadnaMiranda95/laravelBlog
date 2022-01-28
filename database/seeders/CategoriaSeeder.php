@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 
 
-class CategorySeeder extends Seeder
+class CategoriaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,8 +19,8 @@ class CategorySeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for($i= 0; $i < 1000; $i++){
-            DB::table('categories')->insert([
+        for($i= 0; $i < 10; $i++){
+            DB::table('categoria')->insert([
                 'title' => $faker->name,
                 'description' => $faker->realText(100),
                 'image' => $faker->imageUrl(),

@@ -20,6 +20,9 @@ class PostSeeder extends Seeder
                 'title' => $faker->name,
                 'body' => $faker->paragraph(),
                 'image' => Str::random(60),
+                'user_id' => "1",
+                'categoria_id' => "2"
+
             ]);
         }
     }

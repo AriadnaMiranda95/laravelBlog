@@ -14,7 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $records = Post::all();
+
+        return view('post.index', compact('records') );
     }
 
     /**
@@ -24,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post.create');
     }
 
     /**
@@ -35,8 +37,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+            $request->validate([
+                'title' => 'required|min:3|max:255',
+                'body' => 'required|min:10|max:4096',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);        
+           $input = $request->all();        
+          if ($image = $request->file('image')) {
+                $imageDestinationPath = 'uploads/';
+                $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+                $image->move($imageDestinationPath, $postImage);
+                $input['image'] = "$postImage";
+         }           
+         Post::create($input);       
+         return redirect()->route('posts.index')->with('success','Post created successfully.');
+    }    
+    
 
     /**
      * Display the specified resource.
@@ -46,7 +62,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('post.show',compact('post'));
+
     }
 
     /**
@@ -57,7 +74,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('post.edit',compact('post'));
     }
 
     /**
@@ -69,7 +86,21 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title' => 'required|min:3|max:255',
+            'body' => 'required|min:10|max:4096'
+        ]);        
+        $input = $request->all();         
+     if ($image = $request->file('image')) {
+            $imageDestinationPath = 'uploads/';
+            $postImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($imageDestinationPath, $postImage);
+            $input['image'] = "$postImage";
+     } else {
+            unset($input['image']);
+    }     
+    $post->update($input);        
+   return redirect()->route('posts.index')->with('success','Post updated successfully');   
     }
 
     /**
@@ -80,6 +111,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('posts.index')
+        ->with('success','Post deleted successfully');
+    
     }
 }

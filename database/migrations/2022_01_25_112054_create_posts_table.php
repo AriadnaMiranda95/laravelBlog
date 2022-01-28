@@ -18,7 +18,16 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->longText('body');
             $table->string('image');
+            
             $table->timestamps();
+
+            // Campos
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('categoria_id')->nullable();
+
+            // Relaciones
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
         });
     }
 

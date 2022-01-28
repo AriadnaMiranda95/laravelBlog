@@ -40,3 +40,9 @@ TINKER
         indicamos la ruta completa de donde deseemos hacer las pruebas
         ej.  App\Models\Post::all() -> devuelve todos los datos
         ej. App\Models\Post::find(223) -> devuelve el registro con el id 223
+
+
+
+php artisan route:list -< muestra una lista de todas las rutas que existen
+
+
