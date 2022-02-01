@@ -15,13 +15,13 @@ class PostSeeder extends Seeder
      * @return void
      */
     public function run(Faker $faker){
-        for($i= 0; $i < 1000; $i++){
+        for($i= 0; $i < 10; $i++){
             DB::table('posts')->insert([
                 'title' => $faker->name,
                 'body' => $faker->paragraph(),
                 'image' => Str::random(60),
                 'user_id' => "1",
-                'categoria_id' => "2"
+                'categoria_id' => $faker->randomElement([1,2])
 
             ]);
         }

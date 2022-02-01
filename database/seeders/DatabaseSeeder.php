@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use App\Models\Category;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,7 +16,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(CategorySeeder::class); // ejecutamos el método call llamando a la clase estática CategorySeeder
-        // \App\Models\User::factory(10)->create();
+        $faker = \Faker\Factory::create();
+
+        DB::table("users")->insert([
+         ["name" => "ruben", "email" => "ruben@pepe.com", "password" => "password"],
+         ["name" => "irene", "email" => "irene@pepe.com", "password" => "password"],
+         ["name" => "jose", "email" => "jose@pepe.com", "password" => "password"] ]);
+
+         DB::table("categorias")->insert([
+         ["nombre" => "Hardware"],
+         ["nombre" => "Sotfware"],
+         ["nombre" => "Robotica"]
+         ]);
+
+         $this->call(PostSeeder::class);
     }
 }
