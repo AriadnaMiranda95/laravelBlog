@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +25,16 @@ Route::get('/sobre', function () {
 
 Route::get('/contacto', function () {
     return view('contacto');
+
 });
 
 Route::resource('posts', PostController::class);
+Route::get('/admin', function(){
+    return view(('layout'));
+});
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resource('posts', PostController::class)->middleware("auth");
